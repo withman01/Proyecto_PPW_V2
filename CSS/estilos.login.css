@@ -1,0 +1,59 @@
+body {
+    background-color: #fffc48e1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0%;
+}
+
+h1 {
+    color: rgb(0, 0, 0);
+    font-size: 80px;
+    margin-bottom: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h2 {
+    color: rgb(0, 0, 0);
+    font-size: 80px;
+    margin-bottom: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+p {
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+.bandera-ecuador-png {
+    width: 100px;
+    background-size: cover;
+    margin-bottom: px;
+}
+
+.boton-jugar {
+    background-color: rgb(226, 98, 23);
+    color: rgb(255, 255, 255);
+    padding: 15px 20px;
+    border: none;
+    border-radius: 80px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.boton-jugar:hover {
+    background-color: rgb(255, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
+
+.mini-mapa-decoracion {
+    position: right;
+    width: 250px;
+    height: auto;
+    
+}
