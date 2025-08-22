@@ -360,8 +360,8 @@ button:hover {
   width: 350px;
   border: 1px solid #333;
 
-
 }
+
 
 /* Explosión visible encima de todo */
 .explosion{
@@ -370,6 +370,6 @@ button:hover {
   height: 120px;
   pointer-events: none;         /* no bloquea clicks del mapa */
   transform: translate(-50%, -50%); /* centra en (x,y) */
-  z-index: 9999;                /* por encima de overlays/modales */
+  z-index: 9999;              /* por encima de overlays/modales */
 }
 
