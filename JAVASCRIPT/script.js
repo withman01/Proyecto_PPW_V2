@@ -214,20 +214,24 @@ function boomOnProvince(provEl, gifUrl = "../MULTIMEDIA/imagenes/explosion.t.gif
   setTimeout(() => img.remove(), ms);
 }
 
+
 function verificarRespuesta(seleccionada) {
   if (seleccionada === preguntaActual.correcta) {
+    // 💥 Muestra la explosión en el centro de la provincia
     //  Muestra la explosión 
     boomOnProvince(provinciaActual);
 
+    // Marca la provincia y actualiza puntaje como ya hacías
     playExplosion();
 
     provinciaActual.classList.add(`conquistado-${turno}`);
     puntajes[turno] += 1;
     actualizarPuntajes();
 
+    // MUEVE el alert a un setTimeout para no bloquear la animación
     setTimeout(() => {
       alert("✅ ¡Correcto! Provincia conquistada.");
-    }, 600); 
+    }, 600); // 0.6 s: tiempo suficiente para ver la explosión
 
     if (verificarFinJuego()) return; // puedes dejarlo igual
     // Mantiene el turno
@@ -245,3 +249,56 @@ function verificarRespuesta(seleccionada) {
   contPregunta.classList.add("oculto");
   preguntaAbierta = false;
 }
+
+/* FUNCION EN BOTON PARA PLAY/PAUSE DE MUSICA */
+/* -------------------------------------------------------------------------------------------- */
+(() => {
+  
+  const btn = document.querySelector('.iconos-index-izquierda i.bx-pause');
+  if (!btn) return;
+
+  
+  btn.setAttribute('role','button');
+  btn.setAttribute('tabindex','0');
+  btn.style.cursor = 'pointer';
+
+  
+  let bgm = document.getElementById('bgm');
+  if (!bgm) {
+    bgm = document.createElement('audio');
+    bgm.id = 'bgm';
+    bgm.loop = true;
+    bgm.innerHTML = `<source src="/musicas/pacificrim.mp3" type="audio/mpeg">`;
+    document.body.appendChild(bgm);
+  }
+  bgm.autoplay = false; 
+  bgm.muted = false;
+  bgm.preload = 'auto';
+
+  let playing = false;
+  const showPlay  = () => { btn.classList.remove('bx-pause'); btn.classList.add('bx-play'); };
+  const showPause = () => { btn.classList.remove('bx-play');  btn.classList.add('bx-pause'); };
+  showPlay();
+
+  function togglePlay() {
+    if (!playing) {
+      bgm.volume = 0.4;
+      const p = bgm.play();
+      if (p && p.then) {
+        p.then(() => { playing = true; showPause(); })
+         .catch(err => console.log('Audio bloqueado:', err));
+      } else {
+        playing = true; showPause();
+      }
+    } else {
+      bgm.pause();
+      playing = false; showPlay();
+    }
+  }
+
+  
+  btn.addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePlay(); }
+  });
+})();
