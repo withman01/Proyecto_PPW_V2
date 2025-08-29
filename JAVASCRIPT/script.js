@@ -252,53 +252,39 @@ function verificarRespuesta(seleccionada) {
 
 /* FUNCION EN BOTON PARA PLAY/PAUSE DE MUSICA */
 /* -------------------------------------------------------------------------------------------- */
-(() => {
-  
-  const btn = document.querySelector('.iconos-index-izquierda i.bx-pause');
-  if (!btn) return;
+const bgm = document.getElementById('bgm');      // tu <audio id="bgm">
+const btnAudio = document.getElementById('btn-audio'); // el botón nuevo
+const iconAudio = btnAudio.querySelector('i');
 
-  
-  btn.setAttribute('role','button');
-  btn.setAttribute('tabindex','0');
-  btn.style.cursor = 'pointer';
+let audioReady = false;
 
-  
-  let bgm = document.getElementById('bgm');
-  if (!bgm) {
-    bgm = document.createElement('audio');
-    bgm.id = 'bgm';
-    bgm.loop = true;
-    bgm.innerHTML = `<source src="/musicas/pacificrim.mp3" type="audio/mpeg">`;
-    document.body.appendChild(bgm);
+// Primer click del usuario desbloquea el audio (políticas del navegador)
+function unlockAndPlay() {
+  if (!audioReady) {
+    audioReady = true;
+    bgm.volume = 0.6; // volumen inicial
+    bgm.play().then(()=>{
+      iconAudio.className = "bx bx-pause bx-flip-horizontal";
+    }).catch(()=>{/* si falla queda en pausa */});
   }
-  bgm.autoplay = false; 
-  bgm.muted = false;
-  bgm.preload = 'auto';
+  window.removeEventListener('pointerdown', unlockAndPlay);
+}
+window.addEventListener('pointerdown', unlockAndPlay);
 
-  let playing = false;
-  const showPlay  = () => { btn.classList.remove('bx-pause'); btn.classList.add('bx-play'); };
-  const showPause = () => { btn.classList.remove('bx-play');  btn.classList.add('bx-pause'); };
-  showPlay();
+// Toggle con el botón
+btnAudio.addEventListener('click', (e) => {
+  e.stopPropagation(); // no bloquea clics en el mapa
+  if (!audioReady) unlockAndPlay();
 
-  function togglePlay() {
-    if (!playing) {
-      bgm.volume = 0.4;
-      const p = bgm.play();
-      if (p && p.then) {
-        p.then(() => { playing = true; showPause(); })
-         .catch(err => console.log('Audio bloqueado:', err));
-      } else {
-        playing = true; showPause();
-      }
-    } else {
-      bgm.pause();
-      playing = false; showPlay();
-    }
+  if (bgm.paused) {
+    bgm.play();
+    iconAudio.className = "bx bx-pause bx-flip-horizontal";
+  } else {
+    bgm.pause();
+    iconAudio.className = "bx bx-play bx-flip-horizontal";
   }
+});
 
-  
-  btn.addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
-  btn.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePlay(); }
-  });
-})();
+
+
+
