@@ -14,7 +14,7 @@ body {
   display: flex;
   justify-content: center;
   background-color: #8dd8d8;
-  border-bottom: 0px solid #4c94d3;
+
   position: relative;
 
 }
@@ -31,6 +31,7 @@ body {
   flex-direction: row;
   position: unset;
 }
+
 
 .header::after {
   content: "";
@@ -372,4 +373,72 @@ button:hover {
   transform: translate(-50%, -50%); /* centra en (x,y) */
   z-index: 9999;              /* por encima de overlays/modales */
 }
+
+
+/* === “Medallón” compacto sin alterar el layout === */
+.iconos-index-izquierda b,
+.iconos-index-derecha .show-popup,
+.iconos-index-derecha d {
+  box-sizing: border-box;
+  display: inline-flex;          /* mantiene el flujo inline */
+  vertical-align: middle;        /* no “salta” la línea */
+  align-items: center;
+  justify-content: center;
+  width: 50px; height: 50px;     /* compacto */
+  padding: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #f5deb3, #d2b48c);
+  border: 2px solid #8b5a2b;
+  line-height: 1;
+  box-shadow: 2px 2px 6px rgba(0,0,0,.35),
+              inset 0 2px 4px rgba(255,255,255,.25);
+  cursor: pointer;
+  transition: transform .12s ease, filter .12s ease;
+}
+
+.iconos-index-izquierda b i,
+.iconos-index-derecha .show-popup i,
+.iconos-index-derecha d i {
+  font-size: 18px;               /* tamaño del ícono */
+  color: #4b2e1e;
+  pointer-events: none;          /* el click llega al botón, no al <i> */
+}
+
+.iconos-index-izquierda b:hover,
+.iconos-index-derecha .show-popup:hover,
+.iconos-index-derecha d:hover {
+  filter: brightness(1.05);
+}
+
+.btn-circular {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #f5deb3, #d2b48c);
+  border: 2px solid #8b5a2b;
+  box-shadow: 2px 2px 6px rgba(0,0,0,.35),
+              inset 0 2px 4px rgba(255,255,255,.25);
+  cursor: pointer;
+  transition: transform .12s ease, filter .12s ease;
+}
+
+.btn-circular i {
+  font-size: 20px;
+  color: #4b2e1e;
+  pointer-events: none;
+}
+
+.btn-circular:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+
+
+
+
+
 
